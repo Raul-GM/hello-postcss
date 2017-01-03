@@ -9,7 +9,9 @@
 var fs = require('fs');
 var gulp = require('gulp');
 var postcss = require('gulp-postcss');
-var cssnext = require('postcss-cssnext');
+var autoprefixer = require('autoprefixer');
+var cssnext = require('cssnext');
+var precss = require('precss');
 
 /**
  *  This will load all js or coffee files in the gulp directory
@@ -21,6 +23,16 @@ fs.readdirSync('./gulp').filter(function(file) {
   require('./gulp/' + file);
 });
 
+gulp.task('css', function() {
+  var processors = [
+    autoprefixer,
+    cssnext,
+    precss
+  ];
+  return gulp.src('./src/app/*.css')
+    .pipe(postcss(processors))
+    .pipe(gulp.dest('./dest'));
+});
 
 /**
  *  Default task clean temporaries directories and launch the
