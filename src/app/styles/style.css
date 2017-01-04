@@ -1,0 +1,16 @@
+@import "_vars.css";
+
+@define-mixin icon $network, $color {
+  .button.$(network) {
+    background-image: url('img/$(network).png');
+    background-color: $color;
+  }
+}
+
+@mixin icon twitter, blue;
+
+@for $i from 1 to 3 {
+  p:nth-of-type($i) {
+    margin-left: calc( 100% / $i );
+  }
+}

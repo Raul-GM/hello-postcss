@@ -1,0 +1,20 @@
+.test {
+  background: black;
+}
+
+.button.twitter {
+  background-image: url('img/twitter.png');
+  background-color: blue;
+}
+
+p:nth-of-type(1) {
+  margin-left: calc( 100% / 1 );
+}
+
+p:nth-of-type(2) {
+  margin-left: calc( 100% / 2 );
+}
+
+p:nth-of-type(3) {
+  margin-left: calc( 100% / 3 );
+}

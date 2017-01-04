@@ -154,5 +154,24 @@ $social: twitter, facebook, googleplus;
 @mixin icon youtube, red {
   width: 5rem;
 }
+
+@define-extend rounded_button {
+  border-radius: .5rem;
+  padding: 1em;
+  border-width: .0625rem;
+  border-style: solid;
+}
+
+.blue_button {
+  @extend rounded_button;
+  border-color: blue;
+  background-color: darkblue;
+}
+.red_button {
+  @extend rounded_button;
+  border-color: red;
+  background-color: darkred;
+}
+
 /* END OF PREPROCESSORS */
 

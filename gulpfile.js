@@ -22,6 +22,8 @@ var cssnano = require('gulp-cssnano');
 var styleguide = require('postcss-style-guide');
 var atImport = require('postcss-import');
 var mqpacker = require('css-mqpacker');
+var mixins = require('postcss-mixins');
+var pCssFor = require('postcss-for');
 //Preprocessor
 var precss = require('precss');
 
@@ -68,6 +70,19 @@ gulp.task('css', function() {
     .pipe(gulp.dest('./dest'))
     .pipe(cssnano(configNano))
     .pipe(gulp.dest('./dest/min'))
+    .pipe(notify({message: 'Your CSS is ready to rock! =)'}));
+});
+
+/* TAREA PARA EL TUTORIAL DE ROLL YOUR OWN PREPROCESSORS */
+gulp.task('styles', function () {
+  var processors = [
+    atImport,
+    mixins,
+    pCssFor
+  ];
+  return gulp.src('./src/app/styles/style.css')
+    .pipe(postcss(processors))
+    .pipe(gulp.dest('./dest'))
     .pipe(notify({message: 'Your CSS is ready to rock! =)'}));
 });
 
