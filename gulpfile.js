@@ -10,7 +10,19 @@ var fs = require('fs');
 var gulp = require('gulp');
 var postcss = require('gulp-postcss');
 var autoprefixer = require('autoprefixer');
+var color_rgba_fallback = require('postcss-color-rgba-fallback');
+var opacity = require('postcss-opacity');
+var pseudoelements = require('postcss-pseudoelements');
+var vmin = require('postcss-vmin');
+var pixrem = require('pixrem');
+var will_change = require('postcss-will-change');
 var cssnext = require('cssnext');
+var notify = require('gulp-notify');
+var cssnano = require('gulp-cssnano');
+var styleguide = require('postcss-style-guide');
+var atImport = require('postcss-import');
+var mqpacker = require('css-mqpacker');
+//Preprocessor
 var precss = require('precss');
 
 /**
@@ -25,13 +37,38 @@ fs.readdirSync('./gulp').filter(function(file) {
 
 gulp.task('css', function() {
   var processors = [
-    autoprefixer,
+    atImport,
+    mqpacker,
+    cssnano,
+    precss,
+    will_change,
+    autoprefixer({browsers:'safari >= 9, ie >= 11'}),
+    color_rgba_fallback,
+    opacity,
+    pseudoelements,
+    vmin,
+    pixrem,
     cssnext,
-    precss
+    precss,
+    styleguide({
+      project: 'Hello PostCSS!',
+      dest: 'styleguide/index.html',
+      showCode: false
+    })
   ];
+
+  var configNano = {
+    discardComments: { removeAll: true },
+    calc: {precision:2},
+    safe: true
+  };
+
   return gulp.src('./src/app/*.css')
     .pipe(postcss(processors))
-    .pipe(gulp.dest('./dest'));
+    .pipe(gulp.dest('./dest'))
+    .pipe(cssnano(configNano))
+    .pipe(gulp.dest('./dest/min'))
+    .pipe(notify({message: 'Your CSS is ready to rock! =)'}));
 });
 
 /**
@@ -39,5 +76,5 @@ gulp.task('css', function() {
  *  main optimization build task
  */
 gulp.task('default', ['clean'], function () {
-  gulp.start('build');
+  gulp.start('css');
 });

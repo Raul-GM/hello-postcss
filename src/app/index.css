@@ -1,19 +1,158 @@
+@import 'normalize.css/normalize.css';
+
+:root {
+  --red: #e23B00;
+  --blue: #3f526b;
+  --black: #000;
+  --background: #faf8f5;
+}
+
 /* Testing autoprefixer */
 .autoprefixer {
   display: flex;
+  background: var(--blue);
 }
 
 /* Testing cssnext */
 .cssnext {
-  background: color(red alpha(-10%));
+  background: color(var(--black) alpha(-10%));
 }
 
 /* Testing precss */
 .precss{
   @if 3 < 5 {
-    background: green;
+    background: var(--blue);
   }
   @else {
-    background: blue;
+    background: var(--red);
   }
 }
+
+
+/* CROSS BROWSER COMPABILITY */
+@keyframes animationExample {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+.animateThis {
+  animation: animationExample 2s;
+  display: flex;
+}
+
+.thisWillChange {
+  will-change: transform;
+}
+
+.rgbaFallback {
+  background: rgba(0,0,0,0.5);
+}
+
+.opacityFallback {
+  opacity: 0.5;
+}
+
+.vmFallback {
+  width: 50vmin;
+}
+
+.remFallback {
+  height: 10rem;
+  font: 2rem Arial;
+}
+.remFallback::before {
+  content: '';
+  line-height: 1rem;
+}
+/* END OF CROSS BROWSER COMPABILITY */
+
+
+/* MINIFICATION AND OPTIMIZATION */
+
+.column {
+  width: 50%;
+  float: left;
+}
+@media(max-width: 50rem) {
+  .column {
+    width: 100%;
+    height: calc(100% / 3.37);
+    float: none;
+  }
+}
+
+.column_one, .column_two {
+  border: 0.0625rem solid #ccc;
+}
+.column_two {
+  border-left: 0;
+}
+
+@media(max-width: 50rem) {
+  .column_one, .column_two {
+    border: 0.0625rem solid #ccc;
+  }
+  .column_two {
+    border-top: 0;
+  }
+}
+/* END OF MINIFICATION AND OPTIMIZATION */
+
+/* PREPROCESSORS */
+.menu {
+  width: 100%;
+  a {
+    text-decoration: none;
+  }
+  &::before {
+   content: '';
+ }
+}
+
+$text-color: #232323;
+.body {
+  color: $text-color;
+}
+
+$column_layout: 2;
+
+.column {
+  @if $column_layout == 2 {
+    width: 50%;
+    float: left;
+  }   @else {
+    width: 100%;
+  }
+}
+
+@for $i from 1 to 3 {
+  p:nth-of-type($i) {
+    margin-left: calc( 100% / $i );
+  }
+}
+
+$social: twitter, facebook, googleplus;
+@each $icon in ($social) {
+  .icon-$(icon) {
+    background: url('img/$(icon).png');
+  }
+}
+
+@define-mixin icon $network, $color {
+  .button.$(network) {
+  background-image: url('img/$(network).png');
+  background-color: $color;
+  @mixin-content;
+}
+}
+
+@mixin icon twitter, blue{};
+
+@mixin icon youtube, red {
+  width: 5rem;
+}
+/* END OF PREPROCESSORS */
+
