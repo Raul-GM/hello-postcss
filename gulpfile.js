@@ -24,6 +24,15 @@ var atImport = require('postcss-import');
 var mqpacker = require('css-mqpacker');
 var mixins = require('postcss-mixins');
 var pCssFor = require('postcss-for');
+var simpleVar = require('postcss-simple-vars');
+var cssvariables = require('postcss-css-variables');
+var pCssEach = require('postcss-each');
+var pCssConditionals = require('postcss-conditionals');
+var pCssCalc = require('postcss-calc');
+var pCssNested = require('postcss-nested');
+var sassExtend = require('postcss-sass-extend');
+var defineProperty = require('postcss-define-property');
+var nestedProps = require('postcss-nested-props');
 //Preprocessor
 var precss = require('precss');
 
@@ -78,7 +87,16 @@ gulp.task('styles', function () {
   var processors = [
     atImport,
     mixins,
-    pCssFor
+    pCssFor,
+    simpleVar({silent: true}),
+    cssvariables,
+    pCssEach,
+    pCssConditionals,
+    pCssCalc,
+    pCssNested,
+    sassExtend,
+    defineProperty,
+    nestedProps
   ];
   return gulp.src('./src/app/styles/style.css')
     .pipe(postcss(processors))

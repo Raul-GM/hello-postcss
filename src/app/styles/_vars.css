@@ -1,3 +1,47 @@
+$default_padding: 1rem;
+$social: twitter, facebook, youtube;
+$column_count: 3;
+
 .test {
   background: black;
+}
+
+.post {
+  padding: $default_padding;
+}
+
+@each $icon in ($social){
+  .icon-$(icon) {
+    background: url('img/$(icon).png');
+  }
+}
+
+@define-mixin columns $count {
+  @if $count == 3 {
+    width: 33%;
+    float: left;
+  } @else if $count == 2 {
+    width: 50%;
+    float: left;
+  } @else {
+    width: 100%
+  }
+}
+
+.column {
+  @mixin columns $column_count;
+}
+.another_column {
+  @mixin columns 1;
+}
+
+@define-mixin columns_calc $count {
+  width: calc( 100% / $count );
+  @if $count > 1 {
+    float: left;
+  }
+}
+
+.column_calculated {
+  @mixin columns_calc 2;
 }
